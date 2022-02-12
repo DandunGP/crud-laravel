@@ -16,6 +16,7 @@ class ClassroomController extends Controller
     {
         $classrooms = Classroom::all();
         return view('classroom.index', ['class' => $classrooms]);
+        //mantapsss
     }
 
     /**
