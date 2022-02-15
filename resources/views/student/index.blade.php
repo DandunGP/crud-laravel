@@ -8,7 +8,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
+    <br>
+    Tambah Data <br>
+    <a href="/classroom"><button class="btn-success mt-3 rounded">Tambah Classroom</button></a>
+    <a href="/extra"><button class="btn-success mt-3 rounded">Tambah Extracurricular</button></a>
+    
+    <hr>
+
     <a href="/student/add"><button class="btn-success mt-3 rounded">Tambah Data</button></a>
+    <a href="/logout"><button class="btn-danger mt-3 rounded">Log Out</button></a>
     <table class="table">
         <thead>
             <tr>

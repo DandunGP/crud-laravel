@@ -17,6 +17,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
+        // $students = Student::Classrooms()->get(); //Scope
         return view('student.index', ['students' => $students]);
     }
 

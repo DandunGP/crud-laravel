@@ -22,4 +22,9 @@ class Student extends Model
     {
         return $this->belongsTo(Extracurricular::class, 'extra_id')->withDefault(['nama_extra' => 'Belum ada']);
     }
+
+    public function scopeClassrooms($query)
+    {
+        return $query->where('classroom_id', '=', 2);
+    }
 }
