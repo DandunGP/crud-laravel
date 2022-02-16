@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\LoginController;
+use App\Http\Controllers\API\StudentController;
+use App\Http\Controllers\API\ClassroomController;
+use App\Http\Controllers\API\ExtracurricularController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +20,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('/login', [LoginController::class, 'login']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    // Route::get('/logout', [LoginController::class], 'logout');
+    Route::get('/student', [StudentController::class, 'index']);
+    Route::get('/classroom', [ClassroomController::class, 'index']);
+    Route::get('/extra', [ExtracurricularController::class, 'index']);
 });
