@@ -9,6 +9,24 @@ use App\Models\Extracurricular;
 
 class ExtracurricularController extends Controller
 {
+    public function create(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|max:50',
+        ]);
+
+        Extracurricular::create([
+            'nama_extra' => $request->nama,
+        ]);
+
+        return response()->json(
+            [
+                'message' => 'Extracurricular berhasil ditambahkan'
+            ],
+            200
+        );
+    }
+
     public function index(Request $request, Extracurricular $extra)
     {
         $all = $extra->all();
@@ -22,5 +40,42 @@ class ExtracurricularController extends Controller
                 'message' => "Something went wrong",
             ], "Data Extracurricular Not Found");
         }
+    }
+
+    public function edit($id)
+    {
+        $extra = Extracurricular::find($id);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $extra = Extracurricular::find($id);
+
+        $request->validate([
+            'nama' => 'required|max:50',
+        ]);
+
+        $extra->update([
+            'nama_extra' => $request->nama,
+        ]);
+
+        return response()->json(
+            [
+                'message' => 'Extracurricular berhasil diubah'
+            ],
+            200
+        );
+    }
+
+    public function destroy($id)
+    {
+        $extra = Extracurricular::find($id)->delete();
+
+        return response()->json(
+            [
+                'message' => 'Extracurricular berhasil dihapus'
+            ],
+            200
+        );
     }
 }

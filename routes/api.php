@@ -29,4 +29,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/student', [StudentController::class, 'index']);
     Route::get('/classroom', [ClassroomController::class, 'index']);
     Route::get('/extra', [ExtracurricularController::class, 'index']);
+
+    Route::post('/student/add', [StudentController::class, 'create']);
+    Route::get('/student/{id}', [StudentController::class, 'edit']);
+    Route::post('/student/{id}', [StudentController::class, 'update']);
+    Route::delete('/student/{id}', [StudentController::class, 'destroy']);
+
+    Route::post('/classroom/add', [ClassroomController::class, 'create']);
+    Route::get('/classroom/{id}', [ClassroomController::class, 'edit']);
+    Route::post('/classroom/{id}', [ClassroomController::class, 'update']);
+    Route::delete('/classroom/{id}', [ClassroomController::class, 'destroy']);
+
+    Route::post('/extra/add', [ExtracurricularController::class, 'create']);
+    Route::get('/extra/{id}', [ExtracurricularController::class, 'edit']);
+    Route::post('/extra/{id}', [ExtracurricularController::class, 'update']);
+    Route::delete('/extra/{id}', [ExtracurricularController::class, 'destroy']);
 });

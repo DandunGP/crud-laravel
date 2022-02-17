@@ -9,6 +9,30 @@ use App\Models\Student;
 
 class StudentController extends Controller
 {
+    public function create(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|max:50',
+            'alamat' => 'required',
+            'kelas' => 'required',
+            'extra' => 'required'
+        ]);
+
+        Student::create([
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'classroom_id' => $request->kelas,
+            'extra_id' => $request->extra
+        ]);
+
+        return response()->json(
+            [
+                'message' => 'Student berhasil ditambahkan'
+            ],
+            200
+        );
+    }
+
     public function index(Request $request, Student $student)
     {
         $all = $student->all();
@@ -22,5 +46,48 @@ class StudentController extends Controller
                 'message' => "Something went wrong",
             ], "Data Student Not Found");
         }
+    }
+
+    public function edit($id)
+    {
+        $student = Student::find($id);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $student = Student::find($id);
+
+        $request->validate([
+            'nama' => 'required|max:50',
+            'alamat' => 'required',
+            'kelas' => 'required',
+            'extra' => 'required'
+        ]);
+
+        $student->update([
+            'nama' => $request->nama,
+            'alamat' => $request->alamat,
+            'classroom_id' => $request->kelas,
+            'extra_id' => $request->extra
+        ]);
+
+        return response()->json(
+            [
+                'message' => 'Student berhasil diubah'
+            ],
+            200
+        );
+    }
+
+    public function destroy($id)
+    {
+        $student = Student::find($id)->delete();
+
+        return response()->json(
+            [
+                'message' => 'Student berhasil dihapus'
+            ],
+            200
+        );
     }
 }
