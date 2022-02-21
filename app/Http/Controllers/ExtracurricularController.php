@@ -15,7 +15,10 @@ class ExtracurricularController extends Controller
     public function index()
     {
         $extracurricular = Extracurricular::all();
-        return view('extra.index', ['extra' => $extracurricular]);
+        return view('extra.index', [
+            'extra' => $extracurricular,
+            'title' => 'Extracurricular'
+        ]);
     }
 
     /**
@@ -25,7 +28,7 @@ class ExtracurricularController extends Controller
      */
     public function create()
     {
-        return view('extra.insert');
+        return view('extra.insert', ['title' => 'Extracurricular']);
     }
 
     /**
@@ -66,7 +69,7 @@ class ExtracurricularController extends Controller
      */
     public function edit(Extracurricular $extracurricular)
     {
-        return view('extra.edit', ['ex' => $extracurricular]);
+        return view('extra.edit', ['ex' => $extracurricular, 'title' => 'Extracurricular']);
     }
 
     /**

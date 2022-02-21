@@ -15,7 +15,10 @@ class ClassroomController extends Controller
     public function index()
     {
         $classrooms = Classroom::all();
-        return view('classroom.index', ['class' => $classrooms]);
+        return view('classroom.index', [
+            'class' => $classrooms,
+            'title' => 'Classroom'
+        ]);
         //mantapsss
     }
 
@@ -26,7 +29,7 @@ class ClassroomController extends Controller
      */
     public function create()
     {
-        return view('classroom.insert');
+        return view('classroom.insert', ['title' => 'Classroom']);
     }
 
     /**
@@ -67,7 +70,7 @@ class ClassroomController extends Controller
      */
     public function edit(Classroom $classroom)
     {
-        return view('classroom.edit', ['cls' => $classroom]);
+        return view('classroom.edit', ['cls' => $classroom, 'title' => 'Classroom']);
     }
 
     /**

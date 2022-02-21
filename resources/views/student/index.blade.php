@@ -1,22 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Student</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-</head>
-<body>
-    <br>
-    Tambah Data <br>
-    <a href="/classroom"><button class="btn-success mt-3 rounded">Tambah Classroom</button></a>
-    <a href="/extra"><button class="btn-success mt-3 rounded">Tambah Extracurricular</button></a>
-    
-    <hr>
+@extends('layouts.main')
 
-    <a href="/student/add"><button class="btn-success mt-3 rounded">Tambah Data</button></a>
-    <a href="/logout"><button class="btn-danger mt-3 rounded">Log Out</button></a>
+@section('container')
+    <a href="/student/add"><button class="btn-success rounded px-5 mb-3">Tambah Data</button></a>
     <table class="table">
         <thead>
             <tr>
@@ -25,6 +10,7 @@
                 <th scope="col">Alamat</th>
                 <th scope="col">Kelas</th>
                 <th scope="col">Ekstrakurikuler</th>
+                <th scope="col">Foto</th>
                 <th scope="col">Keterangan</th>
             </tr>
         </thead>
@@ -32,24 +18,20 @@
             @foreach ($students as $std)
                 <tr>
                     <td> {{ $std->id }}</td>
-                    <td> {{ $std->nama }}</td>
-                    <td> {{ $std->alamat }}</td>
-                    <td> {{ $std->classroom->nama_kelas }}</td>
-                    <td> {{ $std->extracurricular->nama_extra }}</td>
-                    <td><a href="/student/edit/{{ $std->id }}"><button class="btn btn-primary">Edit</button></a> 
-                        <form action="/student/{{ $std->id }}" method="post">
+                    <td> {{ $std->nama_format }}</td>
+                    <td> {{ $std->alamat_format }}</td>
+                    <td> {{ $std->classroom->nama_kelas_format }}</td>
+                    <td> {{ $std->extracurricular->nama_extra_format }}</td>
+                    <td> <img src="{{ asset('/storage/'. $std->image) }}" style="width:100px;height:75px;"></td>
+                    <td><a href="/student/edit/{{ $std->slug }}"><button class="btn btn-primary w-50">Edit</button></a> 
+                        <form action="/student/{{ $std->slug }}" method="post">
                             @method('delete')
                             @csrf
-                            <button class="btn btn-danger" type="submit">Delete</button>
+                            <button class="btn btn-danger w-50 mt-1" type="submit">Delete</button>
                         </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
-
-</body>
-</html>
+@endsection

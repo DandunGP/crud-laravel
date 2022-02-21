@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\Classroom;
-use App\Models\Extracurricular;
 use Illuminate\Http\Request;
+use App\Models\Extracurricular;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
@@ -18,7 +19,10 @@ class StudentController extends Controller
     {
         $students = Student::all();
         // $students = Student::Classrooms()->get(); //Scope
-        return view('student.index', ['students' => $students]);
+        return view('student.index', [
+            'students' => $students,
+            'title' => 'Student'
+        ]);
     }
 
     /**
@@ -30,7 +34,11 @@ class StudentController extends Controller
     {
         $extra = Extracurricular::all();
         $class = Classroom::all();
-        return view('student.insert', ['class' => $class, 'extra' => $extra]);
+        return view('student.insert', [
+            'class' => $class,
+            'extra' => $extra,
+            'title' => 'Student'
+        ]);
     }
 
     /**
@@ -45,14 +53,18 @@ class StudentController extends Controller
             'nama' => 'required|max:50',
             'alamat' => 'required',
             'kelas' => 'required',
-            'extra' => 'required'
+            'extra' => 'required',
+            'foto' => 'image|file|max:4000'
         ]);
+
+        $validatedImage = $request->file('foto')->store('student-image');
 
         Student::create([
             'nama' => $request->nama,
             'alamat' => $request->alamat,
             'classroom_id' => $request->kelas,
-            'extra_id' => $request->extra
+            'extra_id' => $request->extra,
+            'image' => $validatedImage
         ]);
 
         return redirect('/student');
@@ -79,7 +91,7 @@ class StudentController extends Controller
     {
         $class = Classroom::all();
         $extra = Extracurricular::all();
-        return view('student.edit', ['std' => $student, 'class' => $class, 'extra' => $extra]);
+        return view('student.edit', ['std' => $student, 'class' => $class, 'extra' => $extra, 'title' => 'Student']);
     }
 
     /**
@@ -95,15 +107,24 @@ class StudentController extends Controller
             'nama' => 'required|max:50',
             'alamat' => 'required',
             'kelas' => 'required',
-            'extra' => 'required'
+            'extra' => 'required',
+            'foto' => 'image|file|max:4000'
         ]);
 
-        $students->update([
-            'nama' => $request->nama,
-            'alamat' => $request->alamat,
-            'classroom_id' => $request->kelas,
-            'extra_id' => $request->extra
-        ]);
+        if ($request->file('foto')) {
+            if ($request->oldImage) {
+                Storage::delete($request->oldImage);
+            }
+            $validatedData['image'] = $request->file('foto')->store('student-image');
+        }
+
+        $validatedData['nama'] = $request->nama;
+        $validatedData['alamat'] = $request->alamat;
+        $validatedData['classroom_id'] = $request->kelas;
+        $validatedData['extra_id'] = $request->extra;
+
+        $students->update($validatedData);
+
         return redirect('/student');
     }
 
@@ -115,6 +136,9 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
+        if ($student->image) {
+            Storage::delete($student->image);
+        }
         $student->delete();
         return redirect('/student');
     }
