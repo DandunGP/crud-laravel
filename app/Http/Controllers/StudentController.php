@@ -142,4 +142,8 @@ class StudentController extends Controller
         $student->delete();
         return redirect('/student');
     }
+
+    public function download(Student $student){
+        return $student->image;
+    }
 }

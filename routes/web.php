@@ -40,6 +40,9 @@ Route::put('/student/{students}', [StudentController::class, 'update']);
 Route::delete('/student/{student}', [StudentController::class, 'destroy']);
 Route::get('/student/edit/{student}', [StudentController::class, 'edit'])->middleware('auth', 'checkRole');
 
+// Route::get('/student/download/{student}', [StudentController::class, 'download']);
+Route::get('student/download/{student}', [StudentController::class, 'download']);
+
 Route::get('/classroom', [ClassroomController::class, 'index'])->middleware('auth', 'checkRole');
 Route::get('/classroom/add', [ClassroomController::class, 'create'])->middleware('auth', 'checkRole');
 Route::post('/classroom', [ClassroomController::class, 'store']);
