@@ -143,7 +143,8 @@ class StudentController extends Controller
         return redirect('/student');
     }
 
-    public function download(Student $student){
-        return $student->image;
+    public function download(Student $student)
+    {
+        return response()->download('storage/' . $student->image);
     }
 }

@@ -23,7 +23,7 @@
                     <td> {{ $std->classroom->nama_kelas_format }}</td>
                     <td> {{ $std->extracurricular->nama_extra_format }}</td>
                     <td> <img src="{{ asset('/storage/'. $std->image) }}" style="width:100px;height:75px;"><br>
-                        <a href="/student/download/{{$std->id}}"><button class="btn btn-primary w-50 mt-3">Download</button></a></td>
+                        <a href="/student/download/{{$std->slug}}"><button class="btn btn-primary w-50 mt-3">Download</button></a></td>
                     <td><a href="/student/edit/{{ $std->slug }}"><button class="btn btn-primary w-50">Edit</button></a> 
                         <form action="/student/{{ $std->slug }}" method="post">
                             @method('delete')
